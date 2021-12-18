@@ -16,17 +16,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 package programming
 
-import (
-	"github.com/google/uuid"
-)
-
-type UuidOutput struct {
-	UUID string
-}
-
-type Service struct {
-}
-
-func (p *Service) NewUuid() UuidOutput {
-	return UuidOutput{UUID: uuid.New().String()}
+type Interface interface {
+	NewUuid() UuidOutput
 }

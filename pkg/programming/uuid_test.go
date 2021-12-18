@@ -24,7 +24,8 @@ import (
 
 func TestNewUuidCmd(t *testing.T) {
 	// act
-	output := NewUuid()
+	p := Service{}
+	output := p.NewUuid()
 
 	// assert
 	assert.Contains(t, output.UUID, "-")
