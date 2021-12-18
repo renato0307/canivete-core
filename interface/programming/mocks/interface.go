@@ -3,7 +3,7 @@
 package mocks
 
 import (
-	"github.com/renato0307/canivete-core/pkg/programming"
+	"github.com/renato0307/canivete-core/interface/programming"
 	mock "github.com/stretchr/testify/mock"
 )
 

@@ -18,15 +18,12 @@ package programming
 
 import (
 	"github.com/google/uuid"
+	"github.com/renato0307/canivete-core/interface/programming"
 )
-
-type UuidOutput struct {
-	UUID string
-}
 
 type Service struct {
 }
 
-func (p *Service) NewUuid() UuidOutput {
-	return UuidOutput{UUID: uuid.New().String()}
+func (p *Service) NewUuid() programming.UuidOutput {
+	return programming.UuidOutput{UUID: uuid.New().String()}
 }

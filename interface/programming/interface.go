@@ -16,6 +16,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 package programming
 
+type UuidOutput struct {
+	UUID string
+}
+
 type Interface interface {
 	NewUuid() UuidOutput
 }
