@@ -20,6 +20,12 @@ type UuidOutput struct {
 	UUID string
 }
 
+type JwtDebuggerOutput struct {
+	Header  map[string]interface{}
+	Payload map[string]interface{}
+}
+
 type Interface interface {
 	NewUuid() UuidOutput
+	DebugJwt(tokenString string) JwtDebuggerOutput
 }

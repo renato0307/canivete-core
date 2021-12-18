@@ -16,11 +16,5 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 package programming
 
-import (
-	"github.com/google/uuid"
-	"github.com/renato0307/canivete-core/interface/programming"
-)
-
-func (p *Service) NewUuid() programming.UuidOutput {
-	return programming.UuidOutput{UUID: uuid.New().String()}
+type Service struct {
 }

@@ -17,10 +17,23 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package programming
 
 import (
-	"github.com/google/uuid"
-	"github.com/renato0307/canivete-core/interface/programming"
+	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
-func (p *Service) NewUuid() programming.UuidOutput {
-	return programming.UuidOutput{UUID: uuid.New().String()}
+func TestDebugJwt(t *testing.T) {
+	// arrange
+	tokenString := "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTYzOTgyODY0NiwiZXhwIjoxNjM5ODMyMjQ2fQ.ujQ7wTsos4hYgipdnxSjLICDdfSLq9pYbpwS0WvUKc4"
+
+	// act
+	p := Service{}
+	output, err := p.DebugJwt(tokenString)
+
+	// assert
+	assert.Nil(t, err)
+	assert.Equal(t, output.Header["typ"], "JWT")
+	assert.Equal(t, output.Header["alg"], "HS256")
+	assert.Equal(t, output.Payload["name"], "John Doe")
+	assert.Equal(t, output.Payload["iat"], "1639828646")
 }
