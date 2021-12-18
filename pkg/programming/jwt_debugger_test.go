@@ -17,6 +17,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package programming
 
 import (
+	"strconv"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -32,8 +33,78 @@ func TestDebugJwt(t *testing.T) {
 
 	// assert
 	assert.Nil(t, err)
-	assert.Equal(t, output.Header["typ"], "JWT")
-	assert.Equal(t, output.Header["alg"], "HS256")
-	assert.Equal(t, output.Payload["name"], "John Doe")
-	assert.Equal(t, output.Payload["iat"], "1639828646")
+	assert.Equal(t, "JWT", output.Header["typ"])
+	assert.Equal(t, "HS256", output.Header["alg"])
+	assert.Equal(t, "John Doe", output.Payload["name"])
+	assert.Equal(t, "1639828646", strconv.FormatFloat(output.Payload["iat"].(float64), 'f', 0, 64))
+}
+
+func TestDebugJwtEmptyToken(t *testing.T) {
+	// arrange
+	tokenString := ""
+
+	// act
+	p := Service{}
+	output, err := p.DebugJwt(tokenString)
+
+	// assert
+	assert.NotNil(t, err)
+	assert.Nil(t, output.Header)
+	assert.Nil(t, output.Payload)
+}
+
+func TestDebugJwtInvalidHeader(t *testing.T) {
+	// arrange
+	tokenString := "THIS_IS_INVALID.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTYzOTgyODY0NiwiZXhwIjoxNjM5ODMyMjQ2fQ.ujQ7wTsos4hYgipdnxSjLICDdfSLq9pYbpwS0WvUKc4"
+
+	// act
+	p := Service{}
+	output, err := p.DebugJwt(tokenString)
+
+	// assert
+	assert.NotNil(t, err)
+	assert.Nil(t, output.Header)
+	assert.Nil(t, output.Payload)
+}
+
+func TestDebugJwtHeaderNotJson(t *testing.T) {
+	// arrange
+	tokenString := "c3h4eGNhZGE.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTYzOTgyODY0NiwiZXhwIjoxNjM5ODMyMjQ2fQ.ujQ7wTsos4hYgipdnxSjLICDdfSLq9pYbpwS0WvUKc4"
+
+	// act
+	p := Service{}
+	output, err := p.DebugJwt(tokenString)
+
+	// assert
+	assert.NotNil(t, err)
+	assert.Nil(t, output.Header)
+	assert.Nil(t, output.Payload)
+}
+
+func TestDebugJwtInvalidPayload(t *testing.T) {
+	// arrange
+	tokenString := "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.THIS_IS_INVALID.ujQ7wTsos4hYgipdnxSjLICDdfSLq9pYbpwS0WvUKc4"
+
+	// act
+	p := Service{}
+	output, err := p.DebugJwt(tokenString)
+
+	// assert
+	assert.NotNil(t, err)
+	assert.NotNil(t, output.Header)
+	assert.Nil(t, output.Payload)
+}
+
+func TestDebugJwtPayloadNotJson(t *testing.T) {
+	// arrange
+	tokenString := "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.c3h4eGNhZGE.ujQ7wTsos4hYgipdnxSjLICDdfSLq9pYbpwS0WvUKc4"
+
+	// act
+	p := Service{}
+	output, err := p.DebugJwt(tokenString)
+
+	// assert
+	assert.NotNil(t, err)
+	assert.NotNil(t, output.Header)
+	assert.Nil(t, output.Payload)
 }

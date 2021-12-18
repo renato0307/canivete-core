@@ -13,7 +13,7 @@ type Interface struct {
 }
 
 // DebugJwt provides a mock function with given fields: tokenString
-func (_m *Interface) DebugJwt(tokenString string) programming.JwtDebuggerOutput {
+func (_m *Interface) DebugJwt(tokenString string) (programming.JwtDebuggerOutput, error) {
 	ret := _m.Called(tokenString)
 
 	var r0 programming.JwtDebuggerOutput
@@ -23,7 +23,14 @@ func (_m *Interface) DebugJwt(tokenString string) programming.JwtDebuggerOutput 
 		r0 = ret.Get(0).(programming.JwtDebuggerOutput)
 	}
 
-	return r0
+	var r1 error
+	if rf, ok := ret.Get(1).(func(string) error); ok {
+		r1 = rf(tokenString)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
 }
 
 // NewUuid provides a mock function with given fields:

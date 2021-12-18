@@ -27,5 +27,5 @@ type JwtDebuggerOutput struct {
 
 type Interface interface {
 	NewUuid() UuidOutput
-	DebugJwt(tokenString string) JwtDebuggerOutput
+	DebugJwt(tokenString string) (JwtDebuggerOutput, error)
 }

@@ -34,7 +34,7 @@ func (p *Service) DebugJwt(tokenString string) (programming.JwtDebuggerOutput, e
 	}
 
 	// handles header
-	headerDecoded, err := base64.StdEncoding.DecodeString(parts[0])
+	headerDecoded, err := base64.RawStdEncoding.DecodeString(parts[0])
 	if err != nil {
 		return output, fmt.Errorf("invalid token - header is not valid")
 	}
@@ -45,7 +45,7 @@ func (p *Service) DebugJwt(tokenString string) (programming.JwtDebuggerOutput, e
 	}
 
 	// handles payload
-	payloadDecoded, err := base64.StdEncoding.DecodeString(parts[1])
+	payloadDecoded, err := base64.RawStdEncoding.DecodeString(parts[1])
 	if err != nil {
 		return output, fmt.Errorf("invalid token - payload is not valid")
 	}
