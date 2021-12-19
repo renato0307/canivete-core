@@ -8,5 +8,5 @@ Use https://github.com/vektra/mockery.
 Example:
 
 ```
-mockery -all
+mockery -all -inpkg -case snake
 ```

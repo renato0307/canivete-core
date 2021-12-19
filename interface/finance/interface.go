@@ -14,20 +14,24 @@ GNU Lesser General Public License for more details.
 You should have received a copy of the GNU Lesser General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-package datetime
+package finance
 
-import (
-	"time"
+type CompoundInterestsDetailOutput struct {
+	FinalAmount        float64
+	TotalContributions float64
+	Interests          float64
+}
 
-	"github.com/renato0307/canivete-core/interface/datetime"
-)
+type CompoundInterestsHistoryEntryOutput struct {
+	Period string
+	Totals CompoundInterestsDetailOutput
+}
 
-func (s *Service) FromUnitTimestamp(unixTime int64) datetime.FromUnixTimestampOutput {
-	t := time.Unix(unixTime, 0)
-	strDate := t.UTC().Format(time.UnixDate)
+type CompoundInterestsOutput struct {
+	Total   CompoundInterestsDetailOutput
+	History []CompoundInterestsHistoryEntryOutput
+}
 
-	return datetime.FromUnixTimestampOutput{
-		UnixTimestamp: unixTime,
-		UtcTimestamp:  strDate,
-	}
+type Interface interface {
+	CalculateCompoundInterests(p, n, t, m, y, rInt float64) CompoundInterestsOutput
 }
