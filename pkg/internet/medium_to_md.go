@@ -63,7 +63,7 @@ type mediumPostParagraph struct {
 	Text     string                      `json:"text"`
 	Type     string                      `json:"type"`
 	HRef     string                      `json:"href"`
-	IFrame   string                      `json:"iframe"`
+	IFrame   mediumPostParagraphIFrame   `json:"iframe"`
 	Layout   string                      `json:"layout"`
 	Markups  []mediumPostParagraphMarkup `json:"markups"`
 	Metadata mediumPostParagraphMetadata `json:"metadata"`
@@ -85,6 +85,17 @@ type mediumPostParagraphMetadata struct {
 	Id             string `json:"id"`
 	OriginalWidth  int    `json:"originalWidth"`
 	OriginalHeight int    `json:"originalHeight"`
+}
+
+type mediumPostParagraphIFrame struct {
+	MediaResource mediumPostParagraphIFrameMediaResource `json:"mediaResource"`
+}
+
+type mediumPostParagraphIFrameMediaResource struct {
+	HRef         string `json:"href"`
+	IFrameSrc    string `json:"iframeSrc"`
+	IFrameWidth  int    `json:"iframeWidth"`
+	IFrameHeight int    `json:"iframeHeight"`
 }
 
 func (s *Service) ConvertMediumToMd(postId string) (internet.ConvertMediumToMdOutput, error) {

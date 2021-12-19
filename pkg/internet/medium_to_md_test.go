@@ -35,3 +35,17 @@ func TestConvertMediumToMd(t *testing.T) {
 	assert.Equal(t, postId, output.PostId)
 	assert.NotEmpty(t, output.Markdown)
 }
+
+func TestConvertMediumToMdWithIFrames(t *testing.T) {
+	// arrange
+	postId := "a2371a1c11b7"
+
+	// act
+	s := Service{}
+	output, err := s.ConvertMediumToMd(postId)
+
+	// assert
+	assert.Nil(t, err)
+	assert.Equal(t, postId, output.PostId)
+	assert.NotEmpty(t, output.Markdown)
+}
