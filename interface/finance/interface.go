@@ -33,5 +33,5 @@ type CompoundInterestsOutput struct {
 }
 
 type Interface interface {
-	CalculateCompoundInterests(p, n, t, m, y, rInt float64) CompoundInterestsOutput
+	CalculateCompoundInterests(p, n, t, m, y, rInt float64) (CompoundInterestsOutput, error)
 }

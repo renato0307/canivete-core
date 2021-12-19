@@ -10,7 +10,7 @@ type MockInterface struct {
 }
 
 // CalculateCompoundInterests provides a mock function with given fields: p, n, t, m, y, rInt
-func (_m *MockInterface) CalculateCompoundInterests(p float64, n float64, t float64, m float64, y float64, rInt float64) CompoundInterestsOutput {
+func (_m *MockInterface) CalculateCompoundInterests(p float64, n float64, t float64, m float64, y float64, rInt float64) (CompoundInterestsOutput, error) {
 	ret := _m.Called(p, n, t, m, y, rInt)
 
 	var r0 CompoundInterestsOutput
@@ -20,5 +20,12 @@ func (_m *MockInterface) CalculateCompoundInterests(p float64, n float64, t floa
 		r0 = ret.Get(0).(CompoundInterestsOutput)
 	}
 
-	return r0
+	var r1 error
+	if rf, ok := ret.Get(1).(func(float64, float64, float64, float64, float64, float64) error); ok {
+		r1 = rf(p, n, t, m, y, rInt)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
 }
